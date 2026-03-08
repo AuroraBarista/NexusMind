@@ -1,0 +1,6 @@
+DEBUG LOG START at 2026-01-31T03:25:14.013Z
+Node count: 10
+Sim 0-1: 0.26997754545740904 (VecA type: string)
+Sim 0-2: 0.18518601031169443 (VecA type: string)
+Sim 0-3: 0.4516057159214165 (VecA type: string)
+Sim 0-4: 0.2190800948683461 (VecA type: string)

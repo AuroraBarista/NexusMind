@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    :root {
+      --bg-color: #030014;
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --accent-cyan: #22d3ee;
+      --accent-purple: #8b5cf6;
+      --text-primary: rgba(255, 255, 255, 0.9);
+      --text-secondary: rgba(255, 255, 255, 0.5);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      width: 320px;
+      padding: 20px;
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    .logo span {
+      color: var(--accent-cyan);
+    }
+
+    .status {
+      font-size: 10px;
+      color: var(--accent-cyan);
+      opacity: 0.6;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    /* Inputs */
+    label {
+      display: block;
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 12px;
+      box-sizing: border-box;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent-cyan);
+      background: rgba(34, 211, 238, 0.05);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    /* Buttons Grid */
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* Primary Action (Save Link) */
+    .btn-primary {
+      background: rgba(34, 211, 238, 0.1);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+    }
+
+    .btn-primary:hover {
+      background: rgba(34, 211, 238, 0.2);
+      box-shadow: 0 0 15px rgba(34, 211, 238, 0.1);
+    }
+
+    /* Secondary Action (Screenshot) */
+    .btn-secondary {
+      background: rgba(139, 92, 246, 0.1);
+      color: var(--accent-purple);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(139, 92, 246, 0.2);
+      box-shadow: 0 0 15px rgba(139, 92, 246, 0.1);
+    }
+
+    /* Region Capture (Full Width) */
+    .btn-region {
+      grid-column: span 2;
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px dashed var(--glass-border);
+      margin-top: 0;
+    }
+
+    .btn-region:hover {
+      border-color: var(--text-secondary);
+      color: var(--text-primary);
+      background: var(--glass-bg);
+    }
+
+    /* Status Message */
+    #status {
+      margin-top: 12px;
+      font-size: 11px;
+      text-align: center;
+      min-height: 20px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="logo">NEXUS<span>MIND</span></div>
+    <div class="status">CONNECTED</div>
+  </div>
+
+  <!-- Hidden input for URL capturing -->
+  <input type="hidden" id="url">
+
+  <!-- Destination Selection -->
+  <label>Destination</label>
+  <select id="destinationSelect"
+    style="width: 100%; padding: 12px; margin-bottom: 16px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; color: var(--text-primary); font-family: inherit; font-size: 12px; outline: none;">
+    <option value="global">🌍 Global Capture (Inbox)</option>
+    <option value="project">🎯 Directly to Project (Evidence)</option>
+  </select>
+
+  <!-- Project Selection (Hidden by default) -->
+  <div id="projectWrapper" style="display: none;">
+    <label>Project</label>
+    <select id="projectSelect"
+      style="width: 100%; padding: 12px; margin-bottom: 16px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; color: var(--text-primary); font-family: inherit; font-size: 12px; outline: none;">
+      <option value="">Loading...</option>
+    </select>
+  </div>
+
+  <label>Title / Note</label>
+  <input type="text" id="title" placeholder="Page Title or short note...">
+
+  <label>Details (Optional)</label>
+  <textarea id="note" placeholder="Add context to your thought..."></textarea>
+
+  <div class="actions">
+    <button id="saveLinkBtn" class="btn-primary">
+      <span>🔗</span> Save Link
+    </button>
+    <button id="screenshotBtn" class="btn-secondary">
+      <span>📸</span> Screenshot
+    </button>
+    <button id="regionBtn" class="btn-region">
+      <span>✂️</span> Capture Region
+    </button>
+  </div>
+
+  <div id="status"></div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>

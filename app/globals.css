@@ -1,26 +1,98 @@
 @import "tailwindcss";
 
+@theme {
+  --color-background: #030014;
+  --color-foreground: #E2E8F0;
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space);
+  --font-mono: var(--font-mono);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #030014;
+  --foreground: #E2E8F0;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Nebula Background Effect */
+.bg-nebula {
+  background-color: #030014;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.15), transparent 50%),
+    radial-gradient(circle at 100% 0%, rgba(6, 182, 212, 0.1), transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(59, 130, 246, 0.05), transparent 40%);
+  background-attachment: fixed;
+}
+
+/* Subtle Noise Texture - Reduced Opacity */
+.bg-noise {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-300;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-md border border-white/5 transition-all duration-500 rounded-2xl;
+  }
+
+  .glass-card:hover {
+    @apply bg-white/10 border-white/20 -translate-y-1;
+    box-shadow: 0 0 30px -5px rgba(6, 182, 212, 0.3);
+  }
+
+  .glass-input {
+    @apply bg-black/40 backdrop-blur-md border border-white/10 text-white placeholder:text-neutral-600 focus:bg-black/60 focus:border-cyan-500/50 outline-none transition-all duration-300;
+  }
+
+  .glass-input:focus {
+    box-shadow: 0 0 20px -5px rgba(6, 182, 212, 0.5);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+  }
+
+  .nebula-gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-100 to-white;
+  }
+
+  .hero-gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60;
+  }
+}
+
+/* Monochrome Scrollbar (Dark) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
