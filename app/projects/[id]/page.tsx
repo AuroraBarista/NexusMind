@@ -21,13 +21,13 @@ interface ProjectDetails {
     } | null;
     roadmap: any[];
     current_stage?: string;
-    next_action: string;
+    next_action?: string | null;
     next_action_details?: {
         action: string;
         reason: string;
         expected_outcome: string;
         steps: string[];
-    };
+    } | null;
     next_action_steps?: string[];
     project_brief?: {
         objective?: string;
