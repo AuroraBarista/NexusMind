@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
+import { cn } from "@/lib/utils";
 import { Loader2, ArrowLeft, Target, Users, BookOpen, Activity, PlayCircle, Sparkles, Folder, CheckCircle, LayoutDashboard, Inbox, MessageSquare, Plus, Send, Trash2, ChevronRight, AlertCircle, Lightbulb, Map, Globe, ExternalLink, FileText, Image as ImageIcon } from "lucide-react";
 import { SidebarNav } from "@/components/SidebarNav";
 import { ProfileManager } from "@/components/ProfileManager";
@@ -180,6 +181,7 @@ export default function ProjectExecutionEngine() {
     }]);
     const [chatInput, setChatInput] = useState('');
     const [chatLoading, setChatLoading] = useState(false);
+    const [canvasUpdated, setCanvasUpdated] = useState(false); // Track canvas updates for visual feedback
 
     const [expandedEvidenceId, setExpandedEvidenceId] = useState<string | null>(null);
     const [expandedInboxId, setExpandedInboxId] = useState<string | null>(null);
@@ -204,6 +206,9 @@ export default function ProjectExecutionEngine() {
                 setChatMessages([...newMessages, { role: 'assistant', content: data.reply }]);
             }
             if (data.projectUpdated) {
+                // Trigger visual feedback
+                setCanvasUpdated(true);
+                setTimeout(() => setCanvasUpdated(false), 2000);
                 // Silently refresh the project data so the canvas updates instantly
                 fetchProjectData(false);
             }
@@ -492,11 +497,15 @@ export default function ProjectExecutionEngine() {
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 h-[calc(100vh-220px)]">
 
                     {/* Strategy Canvas */}
-                    <div className="glass-panel p-8 rounded-2xl border border-white/5 flex flex-col space-y-8 overflow-y-auto custom-scrollbar">
+                    <div className={cn(
+                        "glass-panel p-8 rounded-2xl border border-white/5 flex flex-col space-y-8 overflow-y-auto custom-scrollbar transition-all duration-1000",
+                        canvasUpdated ? "shadow-[0_0_50px_rgba(168,85,247,0.3)] border-purple-500/50 bg-purple-500/10 scale-[1.01]" : ""
+                    )}>
                         <div>
                             <h2 className="text-lg font-medium mb-4 flex items-center gap-2 text-purple-400">
                                 <Target size={20} />
                                 Strategy Canvas
+                                {canvasUpdated && <Sparkles size={16} className="text-purple-300 animate-pulse ml-2" />}
                             </h2>
                             <p className="text-sm text-neutral-400 mb-6">Chat with the Architect to define and refine these core parameters.</p>
                         </div>
@@ -555,7 +564,17 @@ export default function ProjectExecutionEngine() {
                             )}
                         </div>
 
-                        <form onSubmit={handleSendMessage} className="p-4 border-t border-white/5">
+                        {/* Suggestion Chips */}
+                        <div className="px-4 pb-3 flex gap-2 overflow-x-auto scrollbar-none">
+                            <button onClick={() => setChatInput("Help me define my Target Audience")} className="text-[10px] px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-white/70 whitespace-nowrap transition-colors">
+                                Help me define my Target Audience
+                            </button>
+                            <button onClick={() => setChatInput("Let's set a Core Objective")} className="text-[10px] px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-white/70 whitespace-nowrap transition-colors">
+                                Let's set a Core Objective
+                            </button>
+                        </div>
+
+                        <form onSubmit={handleSendMessage} className="p-4 pt-1 border-t border-white/5">
                             <div className="relative">
                                 <input
                                     type="text"

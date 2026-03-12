@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Plus, X, Folder, LayoutGrid, Loader2, Sparkles, TrendingUp, Activity } from "lucide-react";
+import { Plus, X, Folder, LayoutGrid, Loader2, Sparkles, TrendingUp, Activity, CheckCircle2, Circle } from "lucide-react";
 import { ProfileManager } from "@/components/ProfileManager";
 import { CreateProjectModal } from "@/components/CreateProjectModal";
 import { SidebarNav } from "@/components/SidebarNav";
@@ -122,20 +122,58 @@ export default function ProjectsPage() {
                         <Loader2 className="animate-spin text-neutral-600" size={32} />
                     </div>
                 ) : projects.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center py-32 text-center">
-                        <div className="mb-6 p-6 rounded-full bg-white/5 border border-white/10">
-                            <LayoutGrid className="text-white/20" size={48} />
+                    <div className="max-w-3xl mx-auto mt-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <div className="glass-panel p-8 md:p-12 rounded-3xl border border-cyan-500/20 bg-gradient-to-b from-cyan-900/10 to-black/40 relative overflow-hidden shadow-2xl">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
+                            <div className="relative z-10">
+                                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono uppercase tracking-widest mb-6">
+                                    <Sparkles size={14} /> Getting Started
+                                </div>
+                                <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">Your "Aha!" Moment Awaits</h2>
+                                <p className="text-neutral-400 text-lg mb-10 max-w-xl leading-relaxed font-light">
+                                    Stop organizing. Start executing. Complete these three steps to experience how NexusMind transforms your raw thoughts into finished projects.
+                                </p>
+
+                                <div className="space-y-4">
+                                    {/* Step 1 */}
+                                    <div className="group p-5 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 hover:bg-emerald-500/10 transition-all flex items-start gap-4">
+                                        <CheckCircle2 size={24} className="text-emerald-400 shrink-0 mt-0.5" />
+                                        <div>
+                                            <h3 className="text-base font-medium text-emerald-100 mb-1">1. Capture Intelligence</h3>
+                                            <p className="text-sm text-emerald-100/60 mb-3">You've successfully set up your NexusMind instance and accessed the platform.</p>
+                                            <button onClick={() => router.push('/dashboard')} className="text-xs font-medium text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 px-3 py-1.5 rounded-lg border border-emerald-500/20 transition-colors">
+                                                Go to Capture Stream
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Step 2 */}
+                                    <div className="group p-5 rounded-2xl border border-cyan-500/30 bg-cyan-500/10 hover:bg-cyan-500/20 transition-all flex items-start gap-4 shadow-[0_0_30px_-5px_rgba(6,182,212,0.15)] relative overflow-hidden">
+                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-500/5 to-transparent -skew-x-[30deg] translate-x-[-150%] animate-[hero-shine_4s_ease-in-out_infinite] pointer-events-none" />
+                                        <Circle size={24} className="text-cyan-400 shrink-0 mt-0.5" />
+                                        <div className="flex-1 relative z-10">
+                                            <h3 className="text-base font-medium text-cyan-100 mb-1">2. Architect a Project</h3>
+                                            <p className="text-sm text-cyan-100/60 mb-4">Create your first goal-oriented container to process your raw evidence into an execution blueprint.</p>
+                                            <button
+                                                onClick={() => setIsModalOpen(true)}
+                                                className="text-sm font-medium text-black bg-cyan-400 hover:bg-cyan-300 px-5 py-2.5 rounded-xl shadow-[0_0_20px_-3px_cyan] hover:shadow-[0_0_30px_-3px_cyan] transition-all flex items-center gap-2"
+                                            >
+                                                <Plus size={16} /> Create First Project
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Step 3 */}
+                                    <div className="group p-5 rounded-2xl border border-white/5 bg-white/[0.02] flex items-start gap-4 opacity-60">
+                                        <Circle size={24} className="text-neutral-700 shrink-0 mt-0.5" />
+                                        <div>
+                                            <h3 className="text-base font-medium text-neutral-300 mb-1">3. Daily Briefing</h3>
+                                            <p className="text-sm text-neutral-500">Review your daily AI-generated execution plan once you have active projects to establish the habit loop.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h3 className="text-xl font-medium text-white mb-2">No active projects.</h3>
-                        <p className="text-neutral-500 mb-8 max-w-md">
-                            Create a project space to organize evidence and track your execution steps.
-                        </p>
-                        <button
-                            onClick={() => setIsModalOpen(true)}
-                            className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-full hover:shadow-[0_0_20px_-5px_rgba(6,182,212,0.5)] transition-all flex items-center gap-2"
-                        >
-                            Create First Project
-                        </button>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { SidebarNav } from "../../components/SidebarNav";
-import { Coffee, Activity, CheckCircle2, AlertTriangle, Lightbulb, ArrowRight, RefreshCw, Loader2 } from "lucide-react";
+import { Coffee, Activity, CheckCircle2, AlertTriangle, Lightbulb, ArrowRight, RefreshCw, Loader2, Play, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface BriefingData {
@@ -20,6 +20,7 @@ export default function BriefingPage() {
     const [briefing, setBriefing] = useState<BriefingData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [focusMode, setFocusMode] = useState(false);
 
     const fetchBriefing = async () => {
         setLoading(true);
@@ -119,8 +120,11 @@ export default function BriefingPage() {
                         </div>
 
                         {/* 5. Next Action (Prominent Hero block) */}
-                        <div className="lg:col-span-1 glass-panel p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-cyan-900/20 to-black/40 shadow-[0_0_30px_-10px_rgba(6,182,212,0.15)] flex flex-col justify-between">
-                            <div>
+                        <div className="lg:col-span-1 glass-panel p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-cyan-900/20 to-black/40 shadow-[0_0_30px_-10px_rgba(6,182,212,0.15)] flex flex-col justify-between relative group overflow-hidden">
+                            {/* Subtle animate-in pulse */}
+                            <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+
+                            <div className="relative z-10">
                                 <h2 className="text-sm font-medium uppercase tracking-widest text-cyan-400 mb-6 flex items-center gap-3">
                                     <ArrowRight size={16} /> Today's Focus Action
                                 </h2>
@@ -131,9 +135,12 @@ export default function BriefingPage() {
                                     {briefing.next_action?.reason}
                                 </p>
                             </div>
-                            <div className="mt-8 pt-4 border-t border-cyan-500/20">
-                                <button className="w-full py-3 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded-xl text-cyan-300 font-medium transition-colors text-sm shadow-[0_0_15px_-5px_cyan]">
-                                    Acknowledge & Start
+                            <div className="mt-8 pt-4 border-t border-cyan-500/20 relative z-10">
+                                <button
+                                    onClick={() => setFocusMode(true)}
+                                    className="w-full py-3 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded-xl text-cyan-300 font-medium transition-all duration-300 text-sm shadow-[0_0_15px_-5px_cyan] hover:shadow-[0_0_25px_-5px_cyan] flex justify-center items-center gap-2 group-hover:bg-cyan-500/30"
+                                >
+                                    <Play size={14} className="group-hover:translate-x-0.5 transition-transform" /> Acknowledge & Start
                                 </button>
                             </div>
                         </div>
@@ -186,6 +193,43 @@ export default function BriefingPage() {
                     </div>
                 ) : null}
             </main>
+
+            {/* Focus Mode Overlay */}
+            {focusMode && briefing?.next_action && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-3xl px-4 animate-in fade-in duration-500">
+                    <div className="absolute top-8 right-8">
+                        <button
+                            onClick={() => setFocusMode(false)}
+                            className="text-white/50 hover:text-white flex items-center gap-2 transition-colors font-mono uppercase tracking-widest text-xs"
+                        >
+                            <X size={16} /> Exit Focus Mode
+                        </button>
+                    </div>
+
+                    {/* Ambient Focus Glow */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="w-[800px] h-[800px] bg-cyan-900/10 rounded-full blur-[150px] animate-pulse" style={{ animationDuration: '4s' }} />
+                    </div>
+
+                    <div className="max-w-3xl w-full text-center relative z-10">
+                        <div className="inline-flex items-center justify-center p-3 bg-cyan-500/10 rounded-full mb-8 border border-cyan-500/20">
+                            <Activity className="text-cyan-400" size={24} />
+                        </div>
+                        <p className="text-cyan-400 font-mono uppercase tracking-widest text-sm mb-6">Deep Work Session Active</p>
+                        <h2 className="text-4xl md:text-6xl font-serif text-white mb-8 leading-tight">{briefing.next_action.action}</h2>
+                        <p className="text-xl text-white/60 font-light mb-12 max-w-2xl mx-auto leading-relaxed">{briefing.next_action.reason}</p>
+
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                            <button
+                                onClick={() => setFocusMode(false)}
+                                className="px-10 py-5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-2xl font-bold tracking-wide shadow-[0_0_40px_-10px_rgba(6,182,212,0.5)] transition-all flex items-center gap-3 text-lg"
+                            >
+                                <CheckCircle2 size={24} /> Mark as Completed
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

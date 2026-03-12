@@ -60,10 +60,10 @@ export function CaptureInput({ onCapture }: CaptureInputProps) {
             <div className="relative flex flex-col gap-2">
                 <div className="relative flex items-center">
                     <div className={cn(
-                        "absolute left-4 transition-colors duration-300",
+                        "absolute left-5 transition-colors duration-300",
                         isFocused || value ? "text-cyan-400" : "text-white/20"
                     )}>
-                        <Command size={18} />
+                        <Command size={22} />
                     </div>
 
                     <input
@@ -75,13 +75,13 @@ export function CaptureInput({ onCapture }: CaptureInputProps) {
                         onKeyDown={handleKeyDown}
                         placeholder={file ? "Add context to attachment..." : "Enter command or capture thought..."}
                         className={cn(
-                            "w-full glass-input text-white placeholder:text-white/30",
-                            "rounded-xl pl-12 pr-32 py-4 text-sm font-sans font-light tracking-wide outline-none transition-all duration-300",
-                            "hover:bg-white/[0.06] focus:bg-white/[0.1] border-white/10 focus:border-cyan-500/30"
+                            "w-full glass-input text-white placeholder:text-white/30 tracking-wide",
+                            "rounded-2xl pl-14 pr-32 py-6 text-base md:text-lg font-sans outline-none transition-all duration-300",
+                            "hover:bg-white/[0.06] focus:bg-white/[0.1] border-white/10 focus:border-cyan-500/30 shadow-2xl"
                         )}
                     />
 
-                    <div className="absolute right-3 flex items-center gap-1">
+                    <div className="absolute right-4 flex items-center gap-2">
                         <input
                             type="file"
                             ref={fileInputRef}
@@ -93,30 +93,30 @@ export function CaptureInput({ onCapture }: CaptureInputProps) {
                             <>
                                 <button
                                     onClick={() => fileInputRef.current?.click()}
-                                    className="p-2 rounded-lg text-white/20 hover:text-white hover:bg-white/5 transition-all"
+                                    className="p-2.5 rounded-lg text-white/20 hover:text-white hover:bg-white/5 transition-all"
                                     title="Attach Image/File"
                                 >
-                                    <ImageIcon size={16} />
+                                    <ImageIcon size={18} />
                                 </button>
-                                <button onClick={handleProFeature} className="p-2 rounded-lg text-white/20 hover:text-white hover:bg-white/5 transition-all">
-                                    <Mic size={16} />
+                                <button onClick={handleProFeature} className="p-2.5 rounded-lg text-white/20 hover:text-white hover:bg-white/5 transition-all">
+                                    <Mic size={18} />
                                 </button>
                             </>
                         )}
 
                         {/* Separator */}
-                        <div className="w-px h-4 bg-white/10 mx-1"></div>
+                        <div className="w-px h-5 bg-white/10 mx-1"></div>
 
                         <button
                             onClick={handleCaptureClick}
                             className={cn(
-                                "p-2 rounded-lg transition-all duration-300 flex items-center gap-2",
+                                "p-2.5 rounded-xl transition-all duration-300 flex items-center gap-2",
                                 value || file
                                     ? "bg-cyan-600 text-white shadow-lg shadow-cyan-500/20"
                                     : "text-white/10 cursor-default"
                             )}
                         >
-                            <ArrowRight size={16} />
+                            <ArrowRight size={20} />
                         </button>
                     </div>
                 </div>

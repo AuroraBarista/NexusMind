@@ -13,6 +13,14 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === "save-to-nexusmind") {
 
+        // Dynamically inject content.js if we need to do DOM parsing without <all_urls>
+        chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            files: ['content.js']
+        }).then(() => {
+            console.log("Injected content script dynamically");
+        }).catch(err => console.error("Script injection failed: ", err));
+
         let content = "";
         let type = "text";
         let sourceUrl = info.pageUrl;

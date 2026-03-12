@@ -32,6 +32,19 @@ export function SidebarNav() {
                 <NavLink href="/projects" icon={<Sparkles size={18} />} label={t("Projects")} active={pathname.startsWith("/projects")} variant="purple" />
                 <NavLink href="/briefing" icon={<Coffee size={18} />} label={t("Daily Briefing")} active={pathname === "/briefing"} variant="cyan" />
                 <NavLink href="#" icon={<Settings size={18} />} label={t("Settings")} active={pathname === "/settings"} variant="default" />
+
+                <div className="mt-8 px-4 mb-2 text-[10px] font-mono uppercase tracking-widest text-white/30">Connect</div>
+                <a
+                    href="https://drive.google.com/drive/folders/1KzgpLtHtZy-j6-vQbUt9nS9GwGVlw39N?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold bg-white/5 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 border border-cyan-500/30 transition-all duration-300 shadow-[0_0_15px_-5px_rgba(6,182,212,0.3)] mt-2 cursor-pointer w-full text-left"
+                >
+                    <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 4.364c3.486 0 6.643 1.83 8.318 4.727H12a7.64 7.64 0 0 0-7.636 7.636c0 .4.043.791.109 1.182A10.912 10.912 0 0 1 12 1.091V4.364zm0 3.272A3.272 3.272 0 1 1 8.727 12 3.272 3.272 0 0 1 12 7.636zm-8.318 4.727h7.636a7.64 7.64 0 0 1 3.545 6.432c-1.332 2.373-3.845 4.023-6.863 4.023A10.912 10.912 0 0 1 1.091 12c0-1.84.477-3.568 1.25-5.073v.018h2.008a7.63 7.63 0 0 1-.668 5.418zm10.5 8.354a7.64 7.64 0 0 0 5.455-6.545h-2.127a10.912 10.912 0 0 1-5.755 7.427A3.267 3.267 0 0 1 12 16.364c-1.5 0-2.827-.636-3.818-1.636l2.318-4.009z" />
+                    </svg>
+                    <span className="tracking-wide text-xs">Install Extension</span>
+                </a>
             </div>
 
             {/* Bottom Status & Logout */}

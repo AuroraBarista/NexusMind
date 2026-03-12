@@ -58,6 +58,9 @@ export function Dashboard({ initialProject }: DashboardProps) {
     // AI Suggestion State
     const [suggestedProject, setSuggestedProject] = useState<{ topic: string } | null>({ topic: "iOS Development" }); // Mocked for now based on PRD
 
+    // Options State
+    const [showInsights, setShowInsights] = useState(false);
+
     // Prevent duplicate processing requests
     const processingRefs = useRef(new Set<string>());
 
@@ -67,9 +70,6 @@ export function Dashboard({ initialProject }: DashboardProps) {
 
         // Fetch Project Details for Edit Modal if needed (leaving hook structure for now)
         setProjectDetails(null);
-
-        // Fetch snippets and filter if scoped
-        fetchSnippets();
 
         const channel = supabase
             .channel('realtime-snippets')
@@ -144,7 +144,6 @@ export function Dashboard({ initialProject }: DashboardProps) {
 
     const filteredSnippets = snippets; // Show all snippets on the dashboard
 
-
     const handleDeleteSnippet = async (id: string) => {
         const { error } = await supabase.from('snippets').delete().eq('id', id);
         if (error) {
@@ -182,9 +181,6 @@ export function Dashboard({ initialProject }: DashboardProps) {
             // Refresh to show result
             fetchSnippets();
 
-            // Clean up ref (optional, but keep it if we don't want to re-process ever in this session)
-            // processingRefs.current.delete(snippetId); 
-
         } catch (error) {
             console.error("Error triggering AI:", error);
             processingRefs.current.delete(snippetId); // Allow retry
@@ -204,37 +200,31 @@ export function Dashboard({ initialProject }: DashboardProps) {
         if (!snippets.length) return;
 
         snippets.forEach(s => {
-            // Only process if it needs processing AND hasn't been processed yet
             if (s.status === 'processing' && !s.is_processed) {
-                // Remove throttle to ensure immediate processing, but keep a safety check to avoid processing ANCIENT items
-                // Only process items created in the last 5 minutes to allow for some upload delay
                 const age = Date.now() - new Date(s.createdAt).getTime();
                 if (age < 300000) {
-                    // Add a small debounce or check if already requested in this session? 
-                    // For now, rely on idempotency (if status changes, it won't re-trigger).
                     triggerAIProcessing(s.id);
                 }
             }
         });
-    }, [snippets]); // Depend on snippets array changes
-
-
+    }, [snippets]);
 
     return (
         <div className="relative w-full h-screen overflow-hidden font-sans selection:bg-cyan-500/30 text-white bg-[#030014] bg-nebula pl-64">
             {/* Navigation */}
             <SidebarNav />
 
+            {/* Main Layout */}
+            <div className="flex justify-center h-screen pt-24 pb-8 px-8 gap-8 overflow-y-auto md:overflow-hidden">
 
+                {/* Left Column: Capture Flow */}
+                <div className={cn(
+                    "flex flex-col gap-6 h-full overflow-hidden transition-all duration-500",
+                    showInsights ? "w-full md:w-2/3" : "w-full max-w-4xl"
+                )}>
 
-            {/* Main Split Layout */}
-            <div className="grid grid-cols-12 h-screen pt-24 pb-8 px-8 gap-8 overflow-y-auto md:overflow-hidden">
-
-                {/* Left Column: Capture Flow (65%) */}
-                <div className="col-span-12 md:col-span-8 flex flex-col gap-6 h-full overflow-hidden">
-
-                    {/* 1. Quick Input (Moved to Top) */}
-                    <div className="shrink-0 animate-in fade-in slide-in-from-top-5 duration-700">
+                    {/* 1. Quick Input (Enlarged) */}
+                    <div className="shrink-0 animate-in fade-in slide-in-from-top-5 duration-700 pt-4">
                         <CaptureInput onCapture={handleCapture} />
                     </div>
 
@@ -263,16 +253,24 @@ export function Dashboard({ initialProject }: DashboardProps) {
                     )}
 
                     {/* 2. Feed of Recent Captures */}
-                    <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
-                        <div className="flex items-center justify-between mb-2">
-                            {/* Heading moved to RecentSnippets */}
+                    <div className="flex-1 flex flex-col min-h-0 overflow-hidden mt-4">
+                        <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/5">
+                            <h2 className="text-sm font-mono tracking-widest text-neutral-400 uppercase">Incoming Streams</h2>
+                            <button
+                                onClick={() => setShowInsights(!showInsights)}
+                                className="flex items-center gap-2 text-xs font-mono uppercase text-cyan-500/70 hover:text-cyan-400 transition-colors bg-cyan-500/10 px-3 py-1.5 rounded-full"
+                            >
+                                <BrainCircuit size={14} />
+                                {showInsights ? "Hide AI Insights" : "Show AI Insights"}
+                            </button>
                         </div>
+
                         <div className="flex-1 overflow-y-auto scrollbar-thin rounded-2xl pr-4">
                             {filteredSnippets.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center h-40 text-center opacity-50 mt-10">
-                                    <Sparkles className="text-cyan-500/50 mb-4" size={32} />
-                                    <p className="text-sm font-medium text-white/60">Your mind is clear.</p>
-                                    <p className="text-xs text-white/40">Capture above to start building your second brain.</p>
+                                <div className="flex flex-col items-center justify-center h-64 text-center opacity-50 mt-10">
+                                    <Sparkles className="text-cyan-500/50 mb-4" size={40} />
+                                    <p className="text-lg font-medium text-white/80 tracking-wide mb-2">Space to Think</p>
+                                    <p className="text-sm text-white/50 max-w-sm">Dump your first link, thought, or image into the input above. NexusMind will automatically parse it and build connections.</p>
                                 </div>
                             ) : (
                                 <RecentSnippets
@@ -286,10 +284,12 @@ export function Dashboard({ initialProject }: DashboardProps) {
                     </div>
                 </div>
 
-                {/* Right Column: AI Insights Panel (35%) */}
-                <div className="hidden md:block col-span-4 h-full relative">
-                    <CaptureInsightsPanel />
-                </div>
+                {/* Right Column: AI Insights Panel */}
+                {showInsights && (
+                    <div className="hidden md:block w-1/3 h-full relative animate-in fade-in slide-in-from-right-8 duration-500">
+                        <CaptureInsightsPanel />
+                    </div>
+                )}
             </div>
 
             {/* Modals */}
