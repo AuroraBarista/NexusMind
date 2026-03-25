@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/api/ext-capture";
+const API_URL = "https://nexus-mind-nu.vercel.app/api/ext-capture";
 
 // Create Context Menu on install
 chrome.runtime.onInstalled.addListener(() => {

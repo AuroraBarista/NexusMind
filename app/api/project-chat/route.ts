@@ -103,12 +103,12 @@ If the user asks about something not in the Evidence Data, tell them they need t
 
         // Perform First OpenAI Call
         let completion = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
+            model: "gpt-5.4-mini",
             messages: apiMessages,
             tools: [updateProjectTool],
             tool_choice: "auto",
             temperature: 0.7,
-            max_tokens: 500,
+            max_completion_tokens: 500,
         });
 
         const responseMessage = completion.choices[0].message;
@@ -164,10 +164,10 @@ If the user asks about something not in the Evidence Data, tell them they need t
 
             // Perform Second OpenAI Call with the tool results so it can naturally reply to the user
             completion = await openai.chat.completions.create({
-                model: "gpt-4o-mini",
+                model: "gpt-5.4-mini",
                 messages: apiMessages,
                 temperature: 0.7,
-                max_tokens: 500,
+                max_completion_tokens: 500,
             });
         }
 

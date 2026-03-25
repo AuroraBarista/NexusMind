@@ -210,7 +210,7 @@ export function Dashboard({ initialProject }: DashboardProps) {
     }, [snippets]);
 
     return (
-        <div className="relative w-full h-screen overflow-hidden font-sans selection:bg-cyan-500/30 text-white bg-[#030014] bg-nebula pl-64">
+        <div className="relative w-full h-screen overflow-hidden font-sans selection:bg-purple-500/30 text-white bg-[#0a0a0a] pl-64 tracking-tight">
             {/* Navigation */}
             <SidebarNav />
 
@@ -230,22 +230,22 @@ export function Dashboard({ initialProject }: DashboardProps) {
 
                     {/* AI Project Suggestion Banner */}
                     {suggestedProject && (
-                        <div className="shrink-0 bg-blue-900/20 border border-blue-500/30 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 animate-in fade-in slide-in-from-top-2 duration-500 shadow-[0_0_20px_-5px_rgba(59,130,246,0.2)]">
+                        <div className="shrink-0 bg-white/[0.02] border border-purple-500/20 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 animate-in fade-in slide-in-from-top-2 duration-500 shadow-[0_10px_30px_-10px_rgba(139,92,246,0.1)]">
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-blue-500/20 rounded-lg text-blue-400">
-                                    <Lightbulb size={20} />
+                                <div className="mt-1 w-8 h-8 rounded-full bg-purple-500/10 flex items-center justify-center shrink-0 text-purple-400">
+                                    <Sparkles size={14} />
                                 </div>
-                                <div>
-                                    <h4 className="text-sm font-medium text-blue-100">Project Pattern Detected</h4>
-                                    <p className="text-xs text-blue-300/80 font-light mt-1">
-                                        You seem to be researching <span className="font-medium text-blue-200">{suggestedProject.topic}</span>.
+                                <div className="flex flex-col gap-1">
+                                    <h4 className="text-sm font-medium text-white">Project Pattern Detected</h4>
+                                    <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                                        You seem to be researching <strong className="font-medium text-white">{suggestedProject.topic}</strong>.
                                         Would you like to formalize this into a project?
                                     </p>
                                 </div>
                             </div>
                             <button
                                 onClick={() => setShowCreateModal(true)}
-                                className="shrink-0 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold uppercase tracking-widest rounded-lg transition-colors shadow-lg shadow-blue-500/20"
+                                className="shrink-0 px-4 py-2 bg-white text-black hover:bg-neutral-200 text-xs font-semibold rounded-lg transition-colors shadow-lg"
                             >
                                 Create Project
                             </button>
@@ -255,10 +255,10 @@ export function Dashboard({ initialProject }: DashboardProps) {
                     {/* 2. Feed of Recent Captures */}
                     <div className="flex-1 flex flex-col min-h-0 overflow-hidden mt-4">
                         <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/5">
-                            <h2 className="text-sm font-mono tracking-widest text-neutral-400 uppercase">Incoming Streams</h2>
+                            <h2 className="text-sm font-semibold tracking-wide text-neutral-400 uppercase">Incoming Streams</h2>
                             <button
                                 onClick={() => setShowInsights(!showInsights)}
-                                className="flex items-center gap-2 text-xs font-mono uppercase text-cyan-500/70 hover:text-cyan-400 transition-colors bg-cyan-500/10 px-3 py-1.5 rounded-full"
+                                className="flex items-center gap-2 text-xs font-medium text-neutral-400 hover:text-white transition-colors bg-white/[0.03] hover:bg-white/[0.08] px-3 py-1.5 rounded-lg border border-white/5"
                             >
                                 <BrainCircuit size={14} />
                                 {showInsights ? "Hide AI Insights" : "Show AI Insights"}

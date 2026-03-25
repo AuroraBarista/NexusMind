@@ -1,5 +1,5 @@
-const API_URL = "http://localhost:3000/api/ext-capture";
-const PROJECTS_URL = "http://localhost:3000/api/get-projects";
+const API_URL = "https://nexus-mind-nu.vercel.app/api/ext-capture";
+const PROJECTS_URL = "https://nexus-mind-nu.vercel.app/api/get-projects";
 
 document.addEventListener('DOMContentLoaded', () => {
     const destSelect = document.getElementById('destinationSelect');

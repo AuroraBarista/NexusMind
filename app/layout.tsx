@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 
@@ -8,26 +8,16 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space",
-  subsets: ["latin"],
-});
-
-const mono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "NexusMind | The Second Brain",
-  description: "Capture, Organize, and Resonate with your thoughts.",
+  title: "Seedflux | Idea Momentum Engine",
+  description: "Stop organizing. Start executing. The ultimate incubator for independent developers.",
   manifest: "/manifest.json",
-  themeColor: "#0a0a0c",
+  themeColor: "#0a0a0a",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "NexusMind",
+    title: "Seedflux",
   },
 };
 
@@ -39,8 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} ${mono.variable} antialiased bg-nebula text-white selection:bg-purple-500/30`}
+        className={`${inter.variable} font-sans antialiased tracking-tight bg-[#0a0a0a] text-[#ededed] selection:bg-purple-500/30 overflow-x-hidden min-h-screen`}
       >
+        <div className="bg-noise" />
         <LanguageProvider>
           {children}
         </LanguageProvider>

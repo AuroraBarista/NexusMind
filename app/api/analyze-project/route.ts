@@ -141,7 +141,7 @@ ${JSON.stringify(snippets?.map(s => ({
 
         // 4. Call OpenAI
         const completion = await openai.chat.completions.create({
-            model: "gpt-4o", // Or gpt-3.5-turbo if cost is concern, but 4o is better for reasoning
+            model: "gpt-5.4", // Or gpt-3.5-turbo if cost is concern, but 5.4 is better for reasoning
             response_format: { type: "json_object" },
             messages: [
                 { role: "system", content: systemPrompt },

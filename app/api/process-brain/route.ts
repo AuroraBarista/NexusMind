@@ -44,7 +44,7 @@ const pdf = require("pdf-parse/lib/pdf-parse.js");
 // Initialize Supabase Admin Client
 const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 // Initialize OpenAI Client
@@ -285,11 +285,11 @@ ${textContent.substring(0, 30000)}
 
         // 4. Call OpenAI (gpt-4o-mini is efficient enough if prompt is good)
         const completion = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
+            model: "gpt-5.4-mini",
             messages: messages,
             response_format: { type: "json_object" },
             temperature: 0.3, // Lower temperature for more focused/deterministic outputs
-            max_tokens: 1000,
+            max_completion_tokens: 1000,
         });
 
         const result = JSON.parse(completion.choices[0].message.content || "{}");
@@ -318,6 +318,7 @@ ${textContent.substring(0, 30000)}
                     ? snippet.project_anchor
                     : (result.project_anchor || snippet.project_anchor),
                 is_processed: true,
+                status: "done",
                 embedding: embedding // Save vector
             })
             .eq("id", snippetId);
@@ -371,6 +372,7 @@ ${textContent.substring(0, 30000)}
                         ? snippet.project_anchor
                         : anchor,
                     is_processed: true,
+                    status: "error",
                     embedding: mockEmbedding
                 }).eq("id", snippetId);
 

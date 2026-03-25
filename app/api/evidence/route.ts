@@ -71,7 +71,7 @@ Output strict JSON:
 `;
 
         const completion = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
+            model: "gpt-5.4-mini",
             messages: [{ role: "system", content: prompt }],
             response_format: { type: "json_object" },
             temperature: 0.3,

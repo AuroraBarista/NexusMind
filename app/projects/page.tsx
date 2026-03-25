@@ -95,13 +95,13 @@ export default function ProjectsPage() {
     };
 
     return (
-        <div className="min-h-screen bg-nebula text-white font-sans p-8 pl-72 select-none overflow-x-hidden">
+        <div className="min-h-screen bg-[#0a0a0a] text-white font-sans p-8 pl-72 select-none overflow-x-hidden tracking-tight">
             <SidebarNav />
             {/* Header */}
             <div className="max-w-6xl mx-auto flex items-center justify-between mb-12">
                 <div>
-                    <h1 className="text-3xl font-display font-medium tracking-tight mb-2">Execution Engine</h1>
-                    <p className="text-neutral-400 text-sm">Transform your captures into completed projects.</p>
+                    <h1 className="text-3xl font-semibold mb-2">Execution Engine</h1>
+                    <p className="text-neutral-500 text-sm font-medium tracking-wide">Transform your captures into completed projects.</p>
                 </div>
 
                 <div className="flex gap-4">
@@ -184,11 +184,11 @@ export default function ProjectsPage() {
                                 animate={{ opacity: 1, y: 0 }}
                                 whileHover={{ y: -2 }}
                                 onClick={() => router.push(`/projects/${project.id}`)}
-                                className={`group relative p-6 glass-panel rounded-2xl border border-white/5 hover:border-cyan-500/30 transition-all cursor-pointer overflow-hidden flex flex-col h-full`}
+                                className={`group relative p-6 bg-[#111] rounded-2xl border border-white/5 hover:border-white/20 transition-all cursor-pointer overflow-hidden flex flex-col h-full`}
                             >
                                 <div className="flex items-start justify-between mb-4">
-                                    <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/5 group-hover:bg-cyan-500/10 transition-colors">
-                                        <Folder size={18} className="text-neutral-400 group-hover:text-cyan-400" />
+                                    <div className="w-10 h-10 rounded-xl bg-white/[0.04] flex items-center justify-center border border-white/[0.05] group-hover:bg-white/[0.08] transition-colors">
+                                        <Folder size={18} className="text-neutral-400 group-hover:text-white" />
                                     </div>
                                     <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
                                         <button
@@ -211,12 +211,12 @@ export default function ProjectsPage() {
                                 {/* Quantitative Project Metrics */}
                                 <div className="mt-6 pt-4 border-t border-white/5 space-y-3">
                                     <div className="flex justify-between items-center text-sm">
-                                        <span className="text-neutral-500 flex items-center gap-1"><Folder size={14} /> Evidence</span>
-                                        <span className="text-white font-mono bg-white/10 px-2 py-0.5 rounded-md">{project.evidence_count || 0}</span>
+                                        <span className="text-neutral-500 flex items-center gap-1.5 font-medium"><Folder size={14} /> Evidence</span>
+                                        <span className="text-neutral-400 font-mono bg-[#1a1a1a] px-2 py-0.5 rounded-md">{project.evidence_count || 0}</span>
                                     </div>
                                     <div className="flex justify-between items-center text-sm">
-                                        <span className="text-neutral-500 flex items-center gap-1"><Sparkles size={14} /> Next action</span>
-                                        <span className="text-cyan-400 max-w-[140px] truncate text-right font-medium">{project.next_action || 'Pending'}</span>
+                                        <span className="text-neutral-500 flex items-center gap-1.5 font-medium"><Sparkles size={14} /> Next action</span>
+                                        <span className="text-white max-w-[140px] truncate text-right font-medium">{project.next_action || 'Pending'}</span>
                                     </div>
                                     <div className="flex justify-between items-center text-sm pt-2 border-t border-white/5">
                                         <span className="text-neutral-500 flex items-center gap-1"><Activity size={14} /> Health</span>

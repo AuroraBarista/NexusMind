@@ -71,7 +71,7 @@ You must ALWAYS return a valid JSON object. Do not use XML tags. Use this struct
 
     // 3. Call OpenAI
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-5.4",
       response_format: { type: "json_object" },
       messages: conversation,
       temperature: 0.7,

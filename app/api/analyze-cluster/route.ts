@@ -44,13 +44,13 @@ export async function POST(request: Request) {
         `;
 
         const completion = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
+            model: "gpt-5.4-mini",
             messages: [
                 { role: "system", content: systemPrompt },
                 { role: "user", content: context }
             ],
             response_format: { type: "json_object" },
-            max_tokens: 300,
+            max_completion_tokens: 300,
         });
 
         const result = JSON.parse(completion.choices[0].message.content || "{}");

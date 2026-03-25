@@ -48,11 +48,11 @@ export function CaptureInput({ onCapture }: CaptureInputProps) {
     }
 
     return (
-        <div className="w-full relative group">
-            {/* Subtle Spotlight Effect instead of gradient */}
+        <div className="w-full relative group pb-4">
+            {/* Spotlight Glow over input */}
             <div
                 className={cn(
-                    "absolute -inset-px rounded-xl bg-cyan-500/10 blur-md transition-opacity duration-500",
+                    "absolute -inset-1 rounded-2xl bg-purple-500/20 blur-xl transition-opacity duration-300",
                     isFocused ? "opacity-100" : "opacity-0"
                 )}
             />
@@ -61,9 +61,9 @@ export function CaptureInput({ onCapture }: CaptureInputProps) {
                 <div className="relative flex items-center">
                     <div className={cn(
                         "absolute left-5 transition-colors duration-300",
-                        isFocused || value ? "text-cyan-400" : "text-white/20"
+                        isFocused || value ? "text-white" : "text-neutral-500"
                     )}>
-                        <Command size={22} />
+                        <Command size={20} />
                     </div>
 
                     <input
@@ -75,9 +75,9 @@ export function CaptureInput({ onCapture }: CaptureInputProps) {
                         onKeyDown={handleKeyDown}
                         placeholder={file ? "Add context to attachment..." : "Enter command or capture thought..."}
                         className={cn(
-                            "w-full glass-input text-white placeholder:text-white/30 tracking-wide",
-                            "rounded-2xl pl-14 pr-32 py-6 text-base md:text-lg font-sans outline-none transition-all duration-300",
-                            "hover:bg-white/[0.06] focus:bg-white/[0.1] border-white/10 focus:border-cyan-500/30 shadow-2xl"
+                            "w-full bg-[#111] text-white placeholder:text-neutral-500 tracking-tight",
+                            "rounded-2xl pl-14 pr-32 py-5 text-lg font-medium outline-none transition-all duration-300",
+                            "border border-white/10 focus:border-purple-500/50 focus:bg-[#151515] shadow-[0_0_40px_rgba(0,0,0,0.5)]"
                         )}
                     />
 
@@ -110,13 +110,13 @@ export function CaptureInput({ onCapture }: CaptureInputProps) {
                         <button
                             onClick={handleCaptureClick}
                             className={cn(
-                                "p-2.5 rounded-xl transition-all duration-300 flex items-center gap-2",
+                                "p-2 rounded-xl transition-all duration-300 flex items-center gap-2",
                                 value || file
-                                    ? "bg-cyan-600 text-white shadow-lg shadow-cyan-500/20"
-                                    : "text-white/10 cursor-default"
+                                    ? "bg-purple-600 hover:bg-purple-500 text-white shadow-lg"
+                                    : "text-neutral-600 cursor-default"
                             )}
                         >
-                            <ArrowRight size={20} />
+                            <ArrowRight size={18} />
                         </button>
                     </div>
                 </div>

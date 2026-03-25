@@ -47,28 +47,24 @@ export default function BriefingPage() {
     const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
     return (
-        <div className="min-h-screen bg-[#03060C] text-neutral-200 font-sans selection:bg-cyan-900/50 py-12 pl-[280px] pr-8 relative overflow-hidden">
-            {/* Ambient Background */}
-            <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-cyan-900/10 blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-900/10 blur-[120px] pointer-events-none" />
-
+        <div className="min-h-screen bg-[#0a0a0a] text-neutral-200 font-sans selection:bg-purple-900/50 py-12 pl-[280px] pr-8 relative overflow-hidden tracking-tight">
             <SidebarNav />
 
             <main className="max-w-[1200px] mx-auto relative z-10">
 
                 {/* Header */}
-                <header className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 md:gap-0 border-b border-white/10 pb-8 mb-12">
+                <header className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 md:gap-0 border-b border-white/5 pb-8 mb-12">
                     <div>
                         <div className="flex items-center gap-3 mb-4">
-                            <div className="p-2 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/10 border border-cyan-500/20 shadow-[0_0_20px_-5px_rgba(6,182,212,0.3)]">
-                                <Coffee className="text-cyan-400 w-6 h-6" />
+                            <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.05] flex items-center justify-center">
+                                <Coffee className="text-white w-5 h-5" />
                             </div>
-                            <h1 className="text-4xl md:text-5xl font-serif text-white tracking-tight leading-none">
+                            <h1 className="text-4xl font-semibold text-white tracking-tight leading-none">
                                 Daily Briefing
                             </h1>
                         </div>
-                        <p className="text-sm font-light text-white/50 flex items-center gap-3 tracking-wide">
-                            <span className="uppercase text-[10px] tracking-widest bg-white/5 px-2 py-1 rounded text-cyan-400 font-medium font-mono">
+                        <p className="text-sm font-medium text-neutral-500 flex items-center gap-3 tracking-wide">
+                            <span className="uppercase text-[10px] tracking-widest bg-white/[0.06] border border-white/[0.05] px-2 py-1 rounded-md text-white font-mono">
                                 AI Intelligence Report
                             </span>
                             {today}
@@ -109,36 +105,32 @@ export default function BriefingPage() {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
 
                         {/* 1. Progress Summary (Spans 2 columns) */}
-                        <div className="lg:col-span-2 glass-panel p-8 rounded-2xl border border-white/10 bg-black/40 shadow-xl relative overflow-hidden group">
-                            <div className="absolute -inset-[100%] bg-gradient-to-r from-transparent via-cyan-500/5 to-transparent -skew-x-[30deg] translate-x-[-150%] group-hover:animate-hero-shine pointer-events-none" />
-                            <h2 className="text-sm font-medium uppercase tracking-widest text-cyan-400 mb-6 flex items-center gap-3">
+                        <div className="lg:col-span-2 bg-[#111] p-8 rounded-2xl border border-white/5 shadow-xl relative overflow-hidden group">
+                            <h2 className="text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-6 flex items-center gap-3">
                                 <Activity size={16} /> Progress Summary
                             </h2>
-                            <p className="text-lg text-white/90 leading-relaxed font-light">
+                            <p className="text-lg text-white/90 leading-relaxed font-normal">
                                 {briefing.progress_summary}
                             </p>
                         </div>
 
                         {/* 5. Next Action (Prominent Hero block) */}
-                        <div className="lg:col-span-1 glass-panel p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-cyan-900/20 to-black/40 shadow-[0_0_30px_-10px_rgba(6,182,212,0.15)] flex flex-col justify-between relative group overflow-hidden">
-                            {/* Subtle animate-in pulse */}
-                            <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
-
+                        <div className="lg:col-span-1 bg-white/[0.03] p-8 rounded-2xl border border-white/10 shadow-2xl flex flex-col justify-between relative group overflow-hidden">
                             <div className="relative z-10">
-                                <h2 className="text-sm font-medium uppercase tracking-widest text-cyan-400 mb-6 flex items-center gap-3">
+                                <h2 className="text-xs font-semibold uppercase tracking-widest text-white mb-6 flex items-center gap-3">
                                     <ArrowRight size={16} /> Today's Focus Action
                                 </h2>
                                 <h3 className="text-xl font-medium text-white mb-4 leading-snug">
                                     {briefing.next_action?.action}
                                 </h3>
-                                <p className="text-sm text-white/60 font-light leading-relaxed">
+                                <p className="text-sm text-neutral-400 font-normal leading-relaxed">
                                     {briefing.next_action?.reason}
                                 </p>
                             </div>
-                            <div className="mt-8 pt-4 border-t border-cyan-500/20 relative z-10">
+                            <div className="mt-8 pt-4 border-t border-white/5 relative z-10">
                                 <button
                                     onClick={() => setFocusMode(true)}
-                                    className="w-full py-3 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded-xl text-cyan-300 font-medium transition-all duration-300 text-sm shadow-[0_0_15px_-5px_cyan] hover:shadow-[0_0_25px_-5px_cyan] flex justify-center items-center gap-2 group-hover:bg-cyan-500/30"
+                                    className="w-full py-3 bg-white text-black hover:bg-neutral-200 rounded-xl font-semibold transition-all duration-300 text-sm flex justify-center items-center gap-2"
                                 >
                                     <Play size={14} className="group-hover:translate-x-0.5 transition-transform" /> Acknowledge & Start
                                 </button>
@@ -146,45 +138,45 @@ export default function BriefingPage() {
                         </div>
 
                         {/* 2. What Went Well */}
-                        <div className="glass-panel p-6 rounded-2xl border border-emerald-500/10 bg-emerald-950/10 hover:border-emerald-500/20 transition-colors">
+                        <div className="bg-[#111] p-6 rounded-2xl border border-white/5 hover:border-white/10 transition-colors">
                             <h2 className="text-xs font-semibold uppercase tracking-widest text-emerald-400 mb-5 flex items-center gap-2">
                                 <CheckCircle2 size={14} /> What Went Well
                             </h2>
                             <ul className="space-y-4">
                                 {briefing.went_well?.map((item, idx) => (
                                     <li key={idx} className="flex items-start gap-3">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/50 mt-2 shrink-0" />
-                                        <p className="text-sm text-emerald-100/80 leading-relaxed font-light">{item}</p>
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/50 mt-2.5 shrink-0" />
+                                        <p className="text-sm text-neutral-300 leading-relaxed">{item}</p>
                                     </li>
                                 ))}
                             </ul>
                         </div>
 
                         {/* 3. Needs Attention */}
-                        <div className="glass-panel p-6 rounded-2xl border border-rose-500/10 bg-rose-950/10 hover:border-rose-500/20 transition-colors">
+                        <div className="bg-[#111] p-6 rounded-2xl border border-white/5 hover:border-white/10 transition-colors">
                             <h2 className="text-xs font-semibold uppercase tracking-widest text-rose-400 mb-5 flex items-center gap-2">
                                 <AlertTriangle size={14} /> Needs Attention
                             </h2>
                             <ul className="space-y-4">
                                 {briefing.needs_attention?.map((item, idx) => (
                                     <li key={idx} className="flex items-start gap-3">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-rose-500/50 mt-2 shrink-0" />
-                                        <p className="text-sm text-rose-100/80 leading-relaxed font-light">{item}</p>
+                                        <div className="w-1.5 h-1.5 rounded-full bg-rose-500/50 mt-2.5 shrink-0" />
+                                        <p className="text-sm text-neutral-300 leading-relaxed">{item}</p>
                                     </li>
                                 ))}
                             </ul>
                         </div>
 
                         {/* 4. Suggested Improvements */}
-                        <div className="glass-panel p-6 rounded-2xl border border-purple-500/10 bg-purple-950/10 hover:border-purple-500/20 transition-colors">
+                        <div className="bg-[#111] p-6 rounded-2xl border border-white/5 hover:border-white/10 transition-colors">
                             <h2 className="text-xs font-semibold uppercase tracking-widest text-purple-400 mb-5 flex items-center gap-2">
                                 <Lightbulb size={14} /> Strategic Improvements
                             </h2>
                             <ul className="space-y-4">
                                 {briefing.suggested_improvements?.map((item, idx) => (
                                     <li key={idx} className="flex items-start gap-3">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-purple-500/50 mt-2 shrink-0" />
-                                        <p className="text-sm text-purple-100/80 leading-relaxed font-light">{item}</p>
+                                        <div className="w-1.5 h-1.5 rounded-full bg-purple-500/50 mt-2.5 shrink-0" />
+                                        <p className="text-sm text-neutral-300 leading-relaxed">{item}</p>
                                     </li>
                                 ))}
                             </ul>

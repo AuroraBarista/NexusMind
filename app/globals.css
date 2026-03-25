@@ -1,16 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #030014;
-  --color-foreground: #E2E8F0;
+  --color-background: #0a0a0a;
+  --color-foreground: #ededed;
   --font-sans: var(--font-inter);
-  --font-display: var(--font-space);
-  --font-mono: var(--font-mono);
 }
 
 :root {
-  --background: #030014;
-  --foreground: #E2E8F0;
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 body {
@@ -23,59 +21,41 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Nebula Background Effect */
-.bg-nebula {
-  background-color: #030014;
-  background-image:
-    radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.15), transparent 50%),
-    radial-gradient(circle at 100% 0%, rgba(6, 182, 212, 0.1), transparent 50%),
-    radial-gradient(circle at 0% 100%, rgba(59, 130, 246, 0.05), transparent 40%);
-  background-attachment: fixed;
-}
-
-/* Subtle Noise Texture - Reduced Opacity */
+/* Subtle Noise Texture - Linear Standard */
 .bg-noise {
   position: fixed;
   inset: 0;
-  z-index: -1;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  z-index: 50;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   pointer-events: none;
-  opacity: 0.3;
+  opacity: 0.02;
+  mix-blend-mode: overlay;
 }
 
 @layer utilities {
-  .glass-panel {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-300;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-  }
-
   .glass-card {
-    @apply bg-white/5 backdrop-blur-md border border-white/5 transition-all duration-500 rounded-2xl;
+    @apply bg-white/[0.015] border border-white/[0.04] transition-all duration-300 rounded-2xl;
   }
 
   .glass-card:hover {
-    @apply bg-white/10 border-white/20 -translate-y-1;
-    box-shadow: 0 0 30px -5px rgba(6, 182, 212, 0.3);
+    @apply bg-white/[0.03] border-white/10 -translate-y-[2px];
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
   }
 
   .glass-input {
-    @apply bg-black/40 backdrop-blur-md border border-white/10 text-white placeholder:text-neutral-600 focus:bg-black/60 focus:border-cyan-500/50 outline-none transition-all duration-300;
+    @apply bg-black/40 backdrop-blur-md border border-white/10 text-white placeholder:text-neutral-600 focus:bg-black/60 focus:border-purple-500/30 outline-none transition-all duration-300;
   }
 
   .glass-input:focus {
-    box-shadow: 0 0 20px -5px rgba(6, 182, 212, 0.5);
+    box-shadow: 0 0 20px -5px rgba(139, 92, 246, 0.2);
   }
 
   .text-glow {
-    text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
-  }
-
-  .nebula-gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-100 to-white;
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
   }
 
   .hero-gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60;
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-white via-white/90 to-neutral-400;
   }
 }
 
